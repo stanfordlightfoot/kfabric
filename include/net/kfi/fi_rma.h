@@ -50,7 +50,7 @@ struct fi_rma_ioc {
 };
 
 struct fi_msg_rma {
-	const struct iovec	*msg_iov;
+	const struct kvec	*msg_iov;
 	void			**desc;
 	size_t			iov_count;
 	fi_addr_t		addr;
@@ -65,7 +65,7 @@ struct fi_ops_rma {
 	ssize_t	(*read)(struct fid_ep *ep, void *buf, size_t len, void *desc,
 			fi_addr_t src_addr, uint64_t addr, uint64_t key,
 			void *context);
-	ssize_t	(*readv)(struct fid_ep *ep, const struct iovec *iov,
+	ssize_t	(*readv)(struct fid_ep *ep, const struct kvec *kiov,
 			 void **desc, size_t count, fi_addr_t src_addr,
 			 uint64_t addr, uint64_t key, void *context);
 	ssize_t	(*readmsg)(struct fid_ep *ep, const struct fi_msg_rma *msg,
@@ -73,7 +73,7 @@ struct fi_ops_rma {
 	ssize_t	(*write)(struct fid_ep *ep, const void *buf, size_t len,
 			 void *desc, fi_addr_t dest_addr, uint64_t addr,
 			 uint64_t key, void *context);
-	ssize_t	(*writev)(struct fid_ep *ep, const struct iovec *iov,
+	ssize_t	(*writev)(struct fid_ep *ep, const struct kvec *kiov,
 			 void **desc, size_t count, fi_addr_t dest_addr,
 			 uint64_t addr, uint64_t key, void *context);
 	ssize_t	(*writemsg)(struct fid_ep *ep, const struct fi_msg_rma *msg,
@@ -99,11 +99,11 @@ fi_read(struct fid_ep *ep, void *buf, size_t len, void *desc,
 }
 
 static inline ssize_t
-fi_readv(struct fid_ep *ep, const struct iovec *iov, void **desc,
+fi_readv(struct fid_ep *ep, const struct kvec *kiov, void **desc,
 	 size_t count, fi_addr_t src_addr, uint64_t addr, uint64_t key,
 	 void *context)
 {
-	return ep->rma->readv(ep, iov, desc, count, src_addr, addr, key,
+	return ep->rma->readv(ep, kiov, desc, count, src_addr, addr, key,
 			      context);
 }
 
@@ -122,11 +122,11 @@ fi_write(struct fid_ep *ep, const void *buf, size_t len, void *desc,
 }
 
 static inline ssize_t
-fi_writev(struct fid_ep *ep, const struct iovec *iov, void **desc,
+fi_writev(struct fid_ep *ep, const struct kvec *kiov, void **desc,
 	 size_t count, fi_addr_t dest_addr, uint64_t addr, uint64_t key,
 	 void *context)
 {
-	return ep->rma->writev(ep, iov, desc, count, dest_addr, addr, key,
+	return ep->rma->writev(ep, kiov, desc, count, dest_addr, addr, key,
 			       context);
 }
 

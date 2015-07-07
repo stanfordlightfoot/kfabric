@@ -92,7 +92,7 @@ struct fid_mr {
 };
 
 struct fi_mr_attr {
-	const struct iovec	*mr_iov;
+	const struct kvec	*mr_iov;
 	size_t			iov_count;
 	uint64_t		access;
 	uint64_t		offset;
@@ -139,7 +139,7 @@ struct fi_ops_mr {
 			uint64_t access, uint64_t offset,
 			uint64_t requested_key, uint64_t flags,
 			struct fid_mr **mr, void *context);
-	int	(*regv)(struct fid *fid, const struct iovec *iov,
+	int	(*regv)(struct fid *fid, const struct kvec *iov,
 			size_t count, uint64_t access,
 			uint64_t offset, uint64_t requested_key,
 			uint64_t flags, struct fid_mr **mr, void *context);

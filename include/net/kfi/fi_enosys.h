@@ -135,7 +135,7 @@ int fi_no_srx_context(struct fid_domain *domain, struct fi_rx_attr *attr,
 int fi_no_mr_reg(struct fid *fid, const void *buf, size_t len,
 		uint64_t access, uint64_t offset, uint64_t requested_key,
 		uint64_t flags, struct fid_mr **mr, void *context);
-int fi_no_mr_regv(struct fid *fid, const struct iovec *iov,
+int fi_no_mr_regv(struct fid *fid, const struct kvec *iov,
 		size_t count, uint64_t access,
 		uint64_t offset, uint64_t requested_key,
 		uint64_t flags, struct fid_mr **mr, void *context);
@@ -160,13 +160,13 @@ ssize_t fi_no_tx_size_left(struct fid_ep *ep);
 
 ssize_t fi_no_msg_recv(struct fid_ep *ep, void *buf, size_t len, void *desc,
 			fi_addr_t src_addr, void *context);
-ssize_t fi_no_msg_recvv(struct fid_ep *ep, const struct iovec *iov, void **desc,
+ssize_t fi_no_msg_recvv(struct fid_ep *ep, const struct kvec *iov, void **desc,
 			size_t count, fi_addr_t src_addr, void *context);
 ssize_t fi_no_msg_recvmsg(struct fid_ep *ep, const struct fi_msg *msg,
 			uint64_t flags);
 ssize_t fi_no_msg_send(struct fid_ep *ep, const void *buf, size_t len,
 			void *desc, fi_addr_t dest_addr, void *context);
-ssize_t fi_no_msg_sendv(struct fid_ep *ep, const struct iovec *iov, void **desc,
+ssize_t fi_no_msg_sendv(struct fid_ep *ep, const struct kvec *iov, void **desc,
 			size_t count, fi_addr_t dest_addr, void *context);
 ssize_t fi_no_msg_sendmsg(struct fid_ep *ep, const struct fi_msg *msg,
 			uint64_t flags);
@@ -200,7 +200,7 @@ int fi_no_cntr_wait(struct fid_cntr *cntr, uint64_t threshold, int timeout);
 ssize_t fi_no_rma_read(struct fid_ep *ep, void *buf, size_t len, void *desc,
 			fi_addr_t src_addr, uint64_t addr, uint64_t key,
 			void *context);
-ssize_t fi_no_rma_readv(struct fid_ep *ep, const struct iovec *iov, void **desc,
+ssize_t fi_no_rma_readv(struct fid_ep *ep, const struct kvec *iov, void **desc,
 			size_t count, fi_addr_t src_addr, uint64_t addr,
 			uint64_t key, void *context);
 ssize_t fi_no_rma_readmsg(struct fid_ep *ep, const struct fi_msg_rma *msg,
@@ -208,7 +208,7 @@ ssize_t fi_no_rma_readmsg(struct fid_ep *ep, const struct fi_msg_rma *msg,
 ssize_t fi_no_rma_write(struct fid_ep *ep, const void *buf, size_t len,
 			void *desc, fi_addr_t dest_addr, uint64_t addr,
 			uint64_t key, void *context);
-ssize_t fi_no_rma_writev(struct fid_ep *ep, const struct iovec *iov,
+ssize_t fi_no_rma_writev(struct fid_ep *ep, const struct kvec *iov,
 			void **desc, size_t count, fi_addr_t dest_addr,
 			uint64_t addr, uint64_t key, void *context);
 ssize_t fi_no_rma_writemsg(struct fid_ep *ep, const struct fi_msg_rma *msg,
@@ -224,7 +224,7 @@ ssize_t fi_no_rma_injectdata(struct fid_ep *ep, const void *buf, size_t len,
 ssize_t fi_no_tagged_recv(struct fid_ep *ep, void *buf, size_t len, void *desc,
 			  fi_addr_t src_addr, uint64_t tag, uint64_t ignore,
 			  void *context);
-ssize_t fi_no_tagged_recvv(struct fid_ep *ep, const struct iovec *iov,
+ssize_t fi_no_tagged_recvv(struct fid_ep *ep, const struct kvec *iov,
 			   void **desc, size_t count, fi_addr_t src_addr,
 			   uint64_t tag, uint64_t ignore, void *context);
 ssize_t fi_no_tagged_recvmsg(struct fid_ep *ep,
@@ -232,7 +232,7 @@ ssize_t fi_no_tagged_recvmsg(struct fid_ep *ep,
 ssize_t fi_no_tagged_send(struct fid_ep *ep, const void *buf, size_t len,
 			  void *desc, fi_addr_t dest_addr, uint64_t tag,
 			  void *context);
-ssize_t fi_no_tagged_sendv(struct fid_ep *ep, const struct iovec *iov,
+ssize_t fi_no_tagged_sendv(struct fid_ep *ep, const struct kvec *iov,
 			   void **desc, size_t count, fi_addr_t dest_addr,
 			   uint64_t tag, void *context);
 ssize_t fi_no_tagged_sendmsg(struct fid_ep *ep, const struct fi_msg_tagged *msg,

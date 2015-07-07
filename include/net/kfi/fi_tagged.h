@@ -41,7 +41,7 @@
 #define FI_DISCARD		FI_CANCEL
 
 struct fi_msg_tagged {
-	const struct iovec	*msg_iov;
+	const struct kvec	*msg_iov;
 	void			**desc;
 	size_t			iov_count;
 	fi_addr_t		addr;
@@ -56,7 +56,7 @@ struct fi_ops_tagged {
 	ssize_t (*recv)(struct fid_ep *ep, void *buf, size_t len, void *desc,
 			fi_addr_t src_addr,
 			uint64_t tag, uint64_t ignore, void *context);
-	ssize_t (*recvv)(struct fid_ep *ep, const struct iovec *iov,
+	ssize_t (*recvv)(struct fid_ep *ep, const struct kvec *iov,
 			void **desc, size_t count, fi_addr_t src_addr,
 			uint64_t tag, uint64_t ignore, void *context);
 	ssize_t (*recvmsg)(struct fid_ep *ep, const struct fi_msg_tagged *msg,
@@ -64,7 +64,7 @@ struct fi_ops_tagged {
 	ssize_t (*send)(struct fid_ep *ep, const void *buf, size_t len,
 			void *desc, fi_addr_t dest_addr, uint64_t tag,
 			void *context);
-	ssize_t (*sendv)(struct fid_ep *ep, const struct iovec *iov,
+	ssize_t (*sendv)(struct fid_ep *ep, const struct kvec *iov,
 			void **desc, size_t count, fi_addr_t dest_addr,
 			uint64_t tag, void *context);
 	ssize_t (*sendmsg)(struct fid_ep *ep, const struct fi_msg_tagged *msg,
@@ -93,7 +93,7 @@ fi_trecv(struct fid_ep *ep, void *buf, size_t len, void *desc,
 }
 
 static inline ssize_t
-fi_trecvv(struct fid_ep *ep, const struct iovec *iov, void **desc,
+fi_trecvv(struct fid_ep *ep, const struct kvec *iov, void **desc,
 	  size_t count, fi_addr_t src_addr, uint64_t tag, uint64_t ignore,
 	  void *context)
 {
@@ -115,7 +115,7 @@ fi_tsend(struct fid_ep *ep, const void *buf, size_t len, void *desc,
 }
 
 static inline ssize_t
-fi_tsendv(struct fid_ep *ep, const struct iovec *iov, void **desc,
+fi_tsendv(struct fid_ep *ep, const struct kvec *iov, void **desc,
 	  size_t count, fi_addr_t dest_addr, uint64_t tag, void *context)
 {
 	return ep->tagged->sendv(ep, iov, desc, count, dest_addr, tag, context);

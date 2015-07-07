@@ -39,7 +39,7 @@
 
 
 struct fi_msg {
-	const struct iovec	*msg_iov;
+	const struct kvec	*msg_iov;
 	void			**desc;
 	size_t			iov_count;
 	fi_addr_t		addr;
@@ -78,14 +78,14 @@ struct fi_ops_msg {
 	size_t	size;
 	ssize_t (*recv)(struct fid_ep *ep, void *buf, size_t len, void *desc,
 			fi_addr_t src_addr, void *context);
-	ssize_t (*recvv)(struct fid_ep *ep, const struct iovec *iov,
+	ssize_t (*recvv)(struct fid_ep *ep, const struct kvec *iov,
 			void **desc, size_t count, fi_addr_t src_addr,
 			void *context);
 	ssize_t (*recvmsg)(struct fid_ep *ep, const struct fi_msg *msg,
 			uint64_t flags);
 	ssize_t (*send)(struct fid_ep *ep, const void *buf, size_t len,
 			void *desc, fi_addr_t dest_addr, void *context);
-	ssize_t (*sendv)(struct fid_ep *ep, const struct iovec *iov,
+	ssize_t (*sendv)(struct fid_ep *ep, const struct kvec *iov,
 			void **desc, size_t count, fi_addr_t dest_addr,
 			void *context);
 	ssize_t (*sendmsg)(struct fid_ep *ep, const struct fi_msg *msg,
@@ -101,12 +101,12 @@ struct fi_ops_msg {
 	/* XXX kOFI additions do we keep them or favor send/recv hacks? */
 	ssize_t (*sendto)(struct fid_ep *ep, const void *buf, size_t len,
 			void *desc, fi_addr_t dest_addr, void *context);
-	ssize_t (*sendtov)(struct fid_ep *ep, const struct iovec *iov,
+	ssize_t (*sendtov)(struct fid_ep *ep, const struct kvec *iov,
 			void *desc, size_t count, fi_addr_t dest_addr,
 			void *context);
 	ssize_t (*recvfrom)(struct fid_ep *ep, void *buf, size_t len,
 			void *desc, fi_addr_t src_addr, void *context);
-	ssize_t (*recvfromv)(struct fid_ep *ep, const struct iovec *iov,
+	ssize_t (*recvfromv)(struct fid_ep *ep, const struct kvec *iov,
 			void *desc, size_t count, fi_addr_t src_addr,
 			void *context);
 };
@@ -263,7 +263,7 @@ fi_recv(struct fid_ep *ep, void *buf, size_t len, void *desc,
 }
 
 static inline ssize_t
-fi_recvv(struct fid_ep *ep, const struct iovec *iov, void **desc,
+fi_recvv(struct fid_ep *ep, const struct kvec *iov, void **desc,
 	 size_t count, fi_addr_t src_addr, void *context)
 {
 	return ep->msg->recvv(ep, iov, desc, count, src_addr, context);
@@ -283,7 +283,7 @@ fi_send(struct fid_ep *ep, const void *buf, size_t len, void *desc,
 }
 
 static inline ssize_t
-fi_sendv(struct fid_ep *ep, const struct iovec *iov, void **desc,
+fi_sendv(struct fid_ep *ep, const struct kvec *iov, void **desc,
 	 size_t count, fi_addr_t dest_addr, void *context)
 {
 	return ep->msg->sendv(ep, iov, desc, count, dest_addr, context);
@@ -324,7 +324,7 @@ fi_sendto(struct fid_ep *ep, const void *buf, size_t len, void *desc,
 }
 
 static inline ssize_t
-fi_sendtov(struct fid_ep *ep, const struct iovec *iov, void *desc,
+fi_sendtov(struct fid_ep *ep, const struct kvec *iov, void *desc,
 	   size_t count, fi_addr_t dest_addr, void *context)
 {
 	return ep->msg->sendtov(ep, iov, desc, count, dest_addr, context);
@@ -338,7 +338,7 @@ fi_recvfrom(struct fid_ep *ep, void *buf, size_t len, void *desc,
 }
 
 static inline ssize_t
-fi_recvfromv(struct fid_ep *ep, const struct iovec *iov, void *desc,
+fi_recvfromv(struct fid_ep *ep, const struct kvec *iov, void *desc,
 	     size_t count, fi_addr_t src_addr, void *context)
 {
 	return ep->msg->recvfromv(ep, iov, desc, count, src_addr, context);
